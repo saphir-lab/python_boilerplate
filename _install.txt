@@ -13,14 +13,18 @@ pip install -r requirements.txt
 pip list
 
 
------- Common -----
+------ Common after python environment creation-----
 Cleanup structure based on program need:
 - adapt file 'utils/__init__.py to load only utils you need for your program
 - remove unnecessary folder (data, log, ...)
+- remove all sample.txt files in folders
 
 Adapt content of 
+- constants.py (banner_lst, LOGLEVEL_CONSOLE, LOGLEVEL_FILE)
 - requirements.txt
 - README.md
+- RELEASE_NOTGES.md
+- Optional: adapt company name under LICENSE.md
 
 Activate GIT
-Sync with Github if needed
+Optional: Sync with Github and create new reporsitory (private or public)
