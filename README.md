@@ -12,6 +12,9 @@ xxx.
 
 xxx.
 
+# Release Notes
+
+See the [RELEASE_NOTES](RELEASE_NOTES.md) file for more details.
 
 # License
 
