@@ -1,1 +1,1 @@
-sampe of input file
+sample input file

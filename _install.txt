@@ -14,17 +14,17 @@ pip list
 
 
 ------ Common after python environment creation-----
-Cleanup structure based on program need:
+Cleanup structure based on program needs:
 - adapt file 'utils/__init__.py to load only utils you need for your program
 - remove unnecessary folder (data, log, ...)
-- remove all sample.txt files in folders
+- remove all sample.txt files in sub-folders
 
 Adapt content of 
 - constants.py (banner_lst, LOGLEVEL_CONSOLE, LOGLEVEL_FILE)
 - requirements.txt
 - README.md
-- RELEASE_NOTGES.md
+- RELEASE_NOTES.md
 - Optional: adapt company name under LICENSE.md
 
 Activate GIT
-Optional: Sync with Github and create new reporsitory (private or public)
+Optional: Sync with Github and create new repository (private or public)
