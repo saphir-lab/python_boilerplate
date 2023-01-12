@@ -27,4 +27,5 @@ Adapt content of
 - Optional: adapt company name under LICENSE.md
 
 Activate GIT
-Optional: Sync with Github and create new repository (private or public)
+- MANDATORY: delete hidden folder .git
+- Optional: Sync with Github and create new repository (private or public)
