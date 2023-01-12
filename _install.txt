@@ -28,4 +28,7 @@ Adapt content of
 
 Activate GIT
 - MANDATORY: delete hidden folder .git
+    - windows, with explorer
+    - Mac OS, using "rm -fr .git" then "git init"
 - Optional: Sync with Github and create new repository (private or public)
+    - ATTENTION, if you have not previously cleanup git folder, you will sync on python_boilerplate !!!
