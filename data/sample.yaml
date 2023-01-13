@@ -1,0 +1,53 @@
+###
+# Look & feel of the script execution
+# Banner: Display an ACII art banner at the top
+#     null : No banner displayed
+#     random: will change banner layout at each execution of program
+#     <number>: will keep a fix banner cross program execution
+# Debug: Level of processing information displayed during execution.
+Console:
+  Banner: "random"      # possible values: null, random, <number>
+  ColoredOutput: true
+  Debug: verbose        # functionality not yet implemented
+
+###
+# CSV file to be transformed.
+# Provide full location to execute straight forward or empty string or null in order to be prompted during program execution.
+Source:
+  CSVFile: null
+  CSVSeparator: ;
+
+###
+#  
+Output:
+  CSVLocation: null            # if not specified (null), Will be same location as CSV input. Note that folder should already exists.
+  CSVSeparator: null           # if not specified (null), Will be same separator as CSV input.
+  OverviewFile: false
+  FileNameSeparator: _
+  FileNameTimeStamp: true      # if true, add timestamp of execution at the end of filename.
+
+###
+# 
+Transform:
+  Algorithm: blake2s          # possible values: blake2s, blake2b, md5, sha1, sha224, sha256, sha384, sha512, sha3_224, sha3_256, sha3_384, sha3_512, length, index (blake2s recommended).
+  Salt: null                  # optional. Specify a string to be used as salt with the algorithm for all the fields you want to provide a hash.
+  KeepOriginalValues: false   # for debugging purpose. To have 2 columns with both original and transformed value (when true, parameter KeepColumnName is then forced to false).
+  KeepColumnName: true        # when false, will reflect in column names which one has been transformed & using which algorithm.
+  Selection: All              # possible values : All, ExclusionList, InclusionList, ParameterFile.
+
+###
+#
+SelectionParameters:
+  # used with Scope: InclusionList - List of Fields Name (from header) that will be hashed, other will keep existing value.
+  InclusionList:        
+  - column1
+  - column2
+  # used with Scope: ExclusionList - List of Fields Name (from header) that will keep value. All others will be hashed.
+  ExclusionList:        
+  - column1
+  - column2
+  # used with Scope: ParameterFile - Explicit action (hash/keep original value) for every field of input file.
+  # IMPORTANT NOTE: If a field name is present on input file but not on parameter file, this field will be dropped from output.
+  ParameterFile:                        
+    CSVFile: null           # prompted if not specified in this file.
+    CSVSeparator: null      # if not specified (null), will be same separator as CSV input.
