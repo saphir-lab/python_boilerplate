@@ -1,5 +1,5 @@
 ### Import personal modules
-from utils.console import Console
+from console import Console
 
 class Menu():
     def __init__(self, colored=True):
