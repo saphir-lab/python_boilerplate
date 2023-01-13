@@ -1,104 +1,12 @@
 ### Import standard modules
 from cmath import nan
-import datetime
 import hashlib
-import json
-import os
-import sys
 
 ### Import external modules
 import pandas as pd
-import yaml
 
 ### Import personal modules
-from utils.console import Console
-
-### Retrieve filename and filename elements (path, name, extension, etc.)
-class FileName():
-    def __init__(self, fullpath="", colored=True):
-        self.fullpath=fullpath
-        self.fullpath_noextension=""
-        self.filepath=""
-        self.filename=""
-        self.filename_noextension=""
-        self.fileextension=""
-        if fullpath:
-            self.set_filename_elements(fullpath)
-        self.console = Console(colored)
-
-    def ask_input_file(self, question="File name: "):
-        """Loop requesting user for a file name until this one is found/exists
-
-        Returns:
-            str: a file name with appropriate path format
-        """
-        msg=""
-        file_in = ""
-        while not file_in:
-            if msg:
-                self.console.print_msg("ERROR", msg)
-            file_in = input(question).strip('"')
-            if not os.path.isfile(file_in):
-                msg = "File Specified doesn't exists. Please specify full path"
-                file_in=""
-        self.set_filename_elements(file_in)
-        return file_in
-
-    def print_filename_details(self):
-        print()
-        print("- fullpath: " + self.fullpath)
-        print("- fullpath no extension: " + self.fullpath_noextension)
-        print("- filepath: " + self.filepath)
-        print("- filename: " + self.filename)
-        print("- filename no extension: " + self.filename_noextension)
-        print("- file extension: " + self.fileextension)
-
-    def set_filename_elements(self, fullpath):
-        self.fullpath = fullpath
-        try:
-            self.filepath = os.path.dirname(self.fullpath)
-            self.filename = os.path.basename(self.fullpath)
-            self.filename_noextension, self.fileextension = os.path.splitext(self.filename)
-            if self.filepath:
-                self.fullpath_noextension = self.filepath + os.path.sep + self.filename_noextension
-            else:
-                self.fullpath_noextension = self.filename_noextension
-        except Exception as e:
-            self.console.print_msg("ERROR", f"{str(e)}")
-
-### Transform filename
-    def change_filepath(self, new_filepath):
-        """Change the location of current filename with new_filepath>
-        """
-        if new_filepath:
-            new_fullpath = new_filepath + os.path.sep + self.filename
-        else:
-            new_fullpath = self.filename
-        self.set_filename_elements(new_fullpath)
-        return new_fullpath
- 
-    def add_subname(self, subname, sep="_"):
-        """Add free text at the end of the filename using an optional text separator (default separator "_")
-        """
-        new_fullpath = self.fullpath_noextension + sep + subname + self.fileextension
-        self.set_filename_elements(new_fullpath)
-        return new_fullpath
-
-    def add_dayonly(self, sep="_"):
-        """Add date (YYMMDD) at the end of the filename using an optional text separator (default separator "_")
-        """
-        dt = datetime.datetime.now()      
-        new_fullpath = self.fullpath_noextension + sep + dt.strftime('%Y%m%d') + self.fileextension
-        self.set_filename_elements(new_fullpath)
-        return new_fullpath
-
-    def add_datetime(self, sep="_"):
-        """Add timestamp (YYMMDD HHMMSS) at the end of the filename using an optional text separator (default separator "_")
-        """
-        dt = datetime.datetime.now()      
-        new_fullpath = self.fullpath_noextension + sep + dt.strftime('%Y%m%d') + sep + dt.strftime('%H%M%S') + self.fileextension
-        self.set_filename_elements(new_fullpath)
-        return new_fullpath
+from console import Console
 
 ### Read & write CSV File using Pandas dataframes
 class CSVFile():
@@ -279,48 +187,11 @@ class CSVFile():
                     eval(algorithm_hash,{"hashlib":hashlib},{"salt":salt, "x":x}) if not x == "" else missing_value
             )
         return df_transformed
-   
-### Retrieve Json or Yaml Content
-class ParameterFile():
-    def __init__(self, filename="", colored=True):
-        self.filename = FileName()
-        self.parameters={}
-        self.console = Console(colored)
-
-        if filename:
-            self.filename = FileName(filename)
-            self.load()
-        
-    def load(self):
-        """Return a Dictionnary from Json or Yaml file
-
-        Args:
-            filename (file): File Name containing settings. Supported format : Json or Yaml
-
-        Returns:
-            Dictionnary: [A Dictionnary build from Json/YAML]
-        """
-        self.parameters = {}
-        filetype = self.filename.fileextension.lower()
-
-        supported_filetype = [".json", ".yaml", ".yml"]
-        if filetype not in supported_filetype:
-            self.console.print_msg("ERROR",f"Parameter file supports following format only: json, yml, yaml.")
-        else:
-            try:
-                if filetype == ".json":
-                    with open(self.filename.fullpath) as config_file:
-                        self.parameters = json.load(config_file)
-                elif filetype == ".yaml" or filetype == ".yml" :
-                    with open(self.filename.fullpath) as config_file:
-                        self.parameters = yaml.safe_load(config_file)
-            except Exception as e:
-                self.console.print_msg("ERROR",f"with Parameter File '{self.filename.fullpath}':")
-                self.console.print_msg("ERROR",f"{str(e)}")
-            else:
-                self.console.print_msg("SUCCESS",f"Parameter file '{self.filename.fullpath}' successfuly loaded")
-
-        return self.parameters
 
 if __name__ == "__main__":
-    pass
+    import os
+    CUR_DIR = os.path.dirname(os.path.abspath(__file__))
+    csvfile = os.path.join(CUR_DIR,"../data/sample.csv")
+    csv_object =CSVFile(csvfile, sep=",")
+    csv_object.load()
+    csv_object.get_stat()
