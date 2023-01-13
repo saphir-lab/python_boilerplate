@@ -13,6 +13,12 @@ import colorama as c
 import json
 import logging
 import os
+from pathlib import Path
+
+LOGLEVEL_SUCCESS = 15
+LOGLEVEL_DISABLE = 99999
+CUR_DIR=os.path.dirname(os.path.abspath(__file__))
+LOG_DIR=os.path.join(CUR_DIR,"../log")
 
 def get_formatter_definition(fmt_obj) -> str:
     fmt = str(fmt_obj._fmt)
@@ -100,13 +106,25 @@ class ColorLogger(logging.getLoggerClass()):
             ch.setFormatter(options.console_formatter)
             self.addHandler(ch)
 
+def get_logger(logger_name:str=None, console_loglevel:int=LOGLEVEL_SUCCESS, file_loglevel:int=LOGLEVEL_DISABLE, logfile:Path=None) -> ColorLogger:
+    if not logger_name:
+        logger_name, _ = os.path.splitext(os.path.basename(__file__))
+    if not logfile and file_loglevel != LOGLEVEL_DISABLE:
+        logfile = os.path.join(LOG_DIR,logger_name+".log")
+    logging.addLevelName(LOGLEVEL_SUCCESS, 'SUCCESS')
+    log_options = ColorLoggerOptions(logfile_name=logfile, console_logging_level=console_loglevel, logfile_logging_level=file_loglevel)
+    logger = ColorLogger(name=logger_name, options=log_options)
+    # save_logger_options(log_options)
+    return logger
+
 if __name__ == "__main__":
     # Some usefull variables 
-    SUCCESS = 25
+    SUCCESS = 15
     APPNAME, _ = os.path.splitext(os.path.basename(__file__))
     CUR_DIR=os.path.dirname(os.path.abspath(__file__))
-    LOG_DIR=os.path.join(CUR_DIR,"log")
+    LOG_DIR=os.path.join(CUR_DIR,"../log")
     LOGFILE = os.path.join(LOG_DIR,APPNAME+".log")
+    LOGFILE2 = os.path.join(LOG_DIR,APPNAME+"2.log")
 
     # Sample logging creation with logging entries
     logging.addLevelName(SUCCESS, 'SUCCESS')
@@ -125,3 +143,13 @@ if __name__ == "__main__":
     logger.error('And non-ASCII stuff, too, like Øresund and Malmö')
     logger.critical('Try a critical message')
     logger.log(SUCCESS, 'Then success level that is a custom level')
+
+    print()
+    print("[+]Same thing but using function get_logger and debug level")
+    logger2 = get_logger(logger_name=APPNAME, logfile=LOGFILE2, file_loglevel=logging.DEBUG)
+    logger2.debug('This message should go to the log file')
+    logger2.info('So should this')
+    logger2.warning('And this, too')
+    logger2.error('And non-ASCII stuff, too, like Øresund and Malmö')
+    logger2.critical('Try a critical message')
+    logger2.log(SUCCESS, 'Then success level that is a custom level')
