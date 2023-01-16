@@ -1,5 +1,4 @@
 ### Import standard modules
-from cmath import nan
 import json
 
 ### Import external modules
@@ -14,8 +13,7 @@ class ParameterFile():
     def __init__(self, filename="", colored=True):
         self.filename = FileName()
         self.parameters={}
-        self.console = Console(colored)
-
+        self.console = Console(colored)         # TODO: Review class ParameterFile to use logger instead of console
         if filename:
             self.filename = FileName(filename)
             self.load()

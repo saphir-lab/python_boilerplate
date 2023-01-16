@@ -14,7 +14,7 @@ class CSVFile():
         self.filename = csv_filename
         self.separator = sep
         self.chunksize = chunksize
-        self.console = Console(colored)
+        self.console = Console(colored)     # TODO: Review class CSVFile to use logger instead of console
         self.content = pd.DataFrame()
         self.stat = pd.DataFrame()
 

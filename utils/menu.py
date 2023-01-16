@@ -57,4 +57,5 @@ class Menu():
         return confirm
 
 if __name__ == "__main__":
+    # TODO: Add sample usage on the __main__ for menu.py
     pass
