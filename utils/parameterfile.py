@@ -5,15 +5,19 @@ import json
 import yaml
 
 ### Import personal modules
-from console import Console
 from filename import FileName
+from coloredlog import ColorLogger, get_logger, LOGLEVEL_SUCCESS, LOGLEVEL_DISABLE
    
 ### Retrieve Json or Yaml Content
 class ParameterFile():
-    def __init__(self, filename="", colored=True):
+    def __init__(self, filename="", logger:ColorLogger=None):
         self.filename = FileName()
         self.parameters={}
-        self.console = Console(colored)         # TODO: Review class ParameterFile to use logger instead of console
+        self.logger = ColorLogger()
+        if logger is None:
+            self.logger = get_logger(logger_name="ParameterFile", console_loglevel=LOGLEVEL_DISABLE)
+        else:
+            self.logger = logger
         if filename:
             self.filename = FileName(filename)
             self.load()
@@ -32,7 +36,7 @@ class ParameterFile():
 
         supported_filetype = [".json", ".yaml", ".yml"]
         if filetype not in supported_filetype:
-            self.console.print_msg("ERROR",f"Parameter file supports following format only: json, yml, yaml.")
+            self.logger.error(f"Parameter file supports following format only: json, yml, yaml.")
         else:
             try:
                 if filetype == ".json":
@@ -42,16 +46,22 @@ class ParameterFile():
                     with open(self.filename.fullpath) as config_file:
                         self.parameters = yaml.safe_load(config_file)
             except Exception as e:
-                self.console.print_msg("ERROR",f"with Parameter File '{self.filename.fullpath}':")
-                self.console.print_msg("ERROR",f"{str(e)}")
+                self.logger.error(f"with Parameter File '{self.filename.fullpath}':")
+                self.logger.error(f"{str(e)}")
             else:
-                self.console.print_msg("SUCCESS",f"Parameter file '{self.filename.fullpath}' successfuly loaded")
+                self.logger.log(LOGLEVEL_SUCCESS, f"Parameter file '{self.filename.fullpath}' successfuly loaded")
 
         return self.parameters
 
 if __name__ == "__main__":
     import os
-    CUR_DIR = os.path.dirname(os.path.abspath(__file__))
+    CUR_DIR=os.path.dirname(os.path.abspath(__file__))
+    # APPNAME, _ = os.path.splitext(os.path.basename(__file__))
+    # LOG_DIR=os.path.join(CUR_DIR,"../log")
+    # LOGFILE = os.path.join(LOG_DIR,APPNAME+".log")
+
     paramfile = os.path.join(CUR_DIR,"../data/sample.yaml")
-    param_object =ParameterFile(paramfile)
+    logger = get_logger()
+    param_object =ParameterFile(filename=paramfile, logger=logger)
+    print("*** Content of parameter file:")
     print(param_object.parameters)
