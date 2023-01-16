@@ -1,5 +1,6 @@
 ### Import standard modules
 import json
+from pathlib import Path
 
 ### Import external modules
 import yaml
@@ -10,7 +11,7 @@ from coloredlog import ColorLogger, get_logger, LOGLEVEL_SUCCESS, LOGLEVEL_DISAB
    
 ### Retrieve Json or Yaml Content
 class ParameterFile():
-    def __init__(self, filename="", logger:ColorLogger=None):
+    def __init__(self, filename:Path="", logger:ColorLogger=None):
         self.filename = FileName()
         self.parameters={}
         self.logger = ColorLogger()
@@ -22,7 +23,7 @@ class ParameterFile():
             self.filename = FileName(filename)
             self.load()
         
-    def load(self):
+    def load(self) -> dict:
         """Return a Dictionnary from Json or Yaml file
 
         Args:
@@ -56,12 +57,12 @@ class ParameterFile():
 if __name__ == "__main__":
     import os
     CUR_DIR=os.path.dirname(os.path.abspath(__file__))
-    # APPNAME, _ = os.path.splitext(os.path.basename(__file__))
-    # LOG_DIR=os.path.join(CUR_DIR,"../log")
-    # LOGFILE = os.path.join(LOG_DIR,APPNAME+".log")
+    APPNAME, _ = os.path.splitext(os.path.basename(__file__))
+    LOG_DIR=os.path.join(CUR_DIR,"../log")
+    LOGFILE = None      # os.path.join(LOG_DIR,APPNAME+".log")
+    logger = get_logger(logfile=LOGFILE)
 
     paramfile = os.path.join(CUR_DIR,"../data/sample.yaml")
-    logger = get_logger()
     param_object =ParameterFile(filename=paramfile, logger=logger)
     print("*** Content of parameter file:")
     print(param_object.parameters)
