@@ -1,5 +1,4 @@
 ### Import standard modules
-from cmath import nan
 import datetime
 import os
 
@@ -7,7 +6,7 @@ import os
 
 ### Import personal modules
 
-### Retrieve filename and filename elements (path, name, extension, etc.)
+### Retrieve various filename elements from a fullpath (path, name, extension, etc.)
 class FileName():
     def __init__(self, fullpath="", colored=True):
         self.fullpath=fullpath
@@ -29,6 +28,8 @@ class FileName():
         print()
 
     def set_filename_elements(self, fullpath):
+        """ Retrieve various filename elements from a fullpath (path, name, extension, etc.) and initialize object
+        """
         self.fullpath = fullpath
         try:
             self.filepath = os.path.dirname(self.fullpath)
