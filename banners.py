@@ -37,6 +37,10 @@ r"""
 
 if __name__ == "__main__":  
     if BANNER_DISPLAY:
+        print("-"*20)
         print(f"Banner is enabled with {len(BANNERS)} banners defined")
+        print("-"*20)
+        for i, banner in enumerate(BANNERS):
+          print(i, banner)
     else:
         print("Banner is disabled")
