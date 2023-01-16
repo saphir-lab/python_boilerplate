@@ -38,7 +38,7 @@ def callback_version(value:bool) -> None:
         print(CONSOLE.get_app_banner(selection="random", banner_lst=BANNERS, appversion=__version__, creator="Designed by " + __author__))
         raise typer.Exit()
 
-def init():
+def init() -> None:
     """ Clear Screen, display banner & start the logger. """
     CONSOLE.clear_screen()
     if all_args["banner"]:
@@ -52,7 +52,7 @@ def init():
     else:
         LOGLEVEL_FILE = LOGLEVEL_DISABLE
     global logger
-    logger = get_logger(logger_name=__appname__, console_loglevel=LOGLEVEL_CONSOLE, file_loglevel=LOGLEVEL_FILE, logfile=all_args["logfile"])
+    logger = get_logger(logger_name=__appname__, console_loglevel=LOGLEVEL_CONSOLE, file_loglevel=LOGLEVEL_FILE, logfile=all_args["logfile"], success_level=LOGLEVEL_SUCCESS)
     logger.info(f"Application Start")
     logger.info(f"Logging levels : Console={LOGLEVEL_CONSOLE}; File={LOGLEVEL_FILE}; Logfile='{all_args['logfile']}'")
     logger.debug("Confirm Debug Mode is Activated")
@@ -62,7 +62,7 @@ def main(infile:Path = typer.Argument(..., exists=True, readable=True, resolve_p
         outfile:Path = typer.Option(None, "--outfile", "-o", exists=False, resolve_path=True, show_default="Same directory and filename (with new extension) as infile", help="File Name of the output file"),
         banner:bool = typer.Option(BANNER_DISPLAY, help="Display a banner at start of the program", rich_help_panel="Customization and Utils"),
         debug:bool = typer.Option(False, help="Enable debug mode on the console", rich_help_panel="Customization and Utils"),
-        logfile:Path = typer.Option(str(LOG_FILE), "--logfile", "-l", exists=False, resolve_path=True,  help="logfile of detailed activities (debug mode)", rich_help_panel="Customization and Utils"),
+        logfile:Path = typer.Option(LOG_FILE, "--logfile", "-l", exists=False, resolve_path=True,  help="logfile of detailed activities (debug mode)", rich_help_panel="Customization and Utils"),
         version:bool = typer.Option(False, "--version", "-v", callback=callback_version, is_eager=True, help="Display version of the program", rich_help_panel="Customization and Utils")
         ) -> None:
     # Put all arguments in a dictionnary & perform extra validation or default value assigment
@@ -74,7 +74,6 @@ def main(infile:Path = typer.Argument(..., exists=True, readable=True, resolve_p
     all_args["debug"]=debug
     all_args["logfile"]=logfile
     all_args["version"]=version
-    
     init()
     validate_params()
 

@@ -39,10 +39,11 @@ def init():
     if BANNER_DISPLAY:
         print(CONSOLE.get_app_banner(selection="random", banner_lst=BANNERS, appversion=__version__, creator="Designed by " + __author__))
     global logger
-    logger = get_logger(logger_name=__appname__, console_loglevel=LOGLEVEL_CONSOLE, file_loglevel=LOGLEVEL_FILE, logfile=LOG_FILE)
+    logger = get_logger(logger_name=__appname__, console_loglevel=LOGLEVEL_CONSOLE, file_loglevel=LOGLEVEL_FILE, logfile=LOG_FILE, success_level=LOGLEVEL_SUCCESS)
     logger.info(f"Application Start")
     logger.info(f"Logging levels : Console={LOGLEVEL_CONSOLE}; File={LOGLEVEL_FILE}; Logfile='{LOG_FILE}'")
     logger.debug("Confirm Debug Mode is Activated")
+    logger.log(LOGLEVEL_SUCCESS, 'Then success level that is a custom level')
 
 if __name__ == "__main__":
     init()

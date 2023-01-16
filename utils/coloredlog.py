@@ -106,12 +106,12 @@ class ColorLogger(logging.getLoggerClass()):
             ch.setFormatter(options.console_formatter)
             self.addHandler(ch)
 
-def get_logger(logger_name:str=None, console_loglevel:int=LOGLEVEL_SUCCESS, file_loglevel:int=LOGLEVEL_DISABLE, logfile:Path=None) -> ColorLogger:
+def get_logger(logger_name:str=None, console_loglevel:int=LOGLEVEL_SUCCESS, file_loglevel:int=LOGLEVEL_DISABLE, logfile:Path=None, success_level=LOGLEVEL_SUCCESS) -> ColorLogger:
     if not logger_name:
         logger_name, _ = os.path.splitext(os.path.basename(__file__))
-    if not logfile and file_loglevel != LOGLEVEL_DISABLE:
+    if (not logfile or logfile =="None") and file_loglevel != LOGLEVEL_DISABLE:
         logfile = os.path.join(LOG_DIR,logger_name+".log")
-    logging.addLevelName(LOGLEVEL_SUCCESS, 'SUCCESS')
+    logging.addLevelName(success_level, 'SUCCESS')
     log_options = ColorLoggerOptions(logfile_name=logfile, console_logging_level=console_loglevel, logfile_logging_level=file_loglevel)
     logger = ColorLogger(name=logger_name, options=log_options)
     # save_logger_options(log_options)

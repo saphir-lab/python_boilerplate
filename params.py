@@ -6,7 +6,7 @@ from utils.console import Console
 from utils.coloredlog import LOGLEVEL_SUCCESS, LOGLEVEL_DISABLE
 CONSOLE = Console(colored=True)
 # In case you want to overwrite LOGLEVEL_SUCCESS
-# LOGLEVEL_SUCCESS = 15
+LOGLEVEL_SUCCESS = 25
 
 # Some interresting path
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
