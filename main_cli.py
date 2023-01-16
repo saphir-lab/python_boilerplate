@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'P. Saint-Amand'
 __appname__ = 'BoilerPlate_cli'
-__version__ = 'V 0.0.2'
+__version__ = 'V 1.0.0'
 
 # Standard Python Modules
 import logging
