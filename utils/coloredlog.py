@@ -111,6 +111,8 @@ def get_logger(logger_name:str=None, console_loglevel:int=LOGLEVEL_SUCCESS, file
         logger_name, _ = os.path.splitext(os.path.basename(__file__))
     if (not logfile or logfile =="None") and file_loglevel != LOGLEVEL_DISABLE:
         logfile = os.path.join(LOG_DIR,logger_name+".log")
+    if logfile and file_loglevel == LOGLEVEL_DISABLE:
+        file_loglevel = logging.DEBUG
     logging.addLevelName(success_level, 'SUCCESS')
     log_options = ColorLoggerOptions(logfile_name=logfile, console_logging_level=console_loglevel, logfile_logging_level=file_loglevel)
     logger = ColorLogger(name=logger_name, options=log_options)
