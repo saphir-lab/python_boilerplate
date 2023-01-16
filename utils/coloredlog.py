@@ -119,7 +119,6 @@ def get_logger(logger_name:str=None, console_loglevel:int=LOGLEVEL_SUCCESS, file
 
 if __name__ == "__main__":
     # Some usefull variables 
-    SUCCESS = 15
     APPNAME, _ = os.path.splitext(os.path.basename(__file__))
     CUR_DIR=os.path.dirname(os.path.abspath(__file__))
     LOG_DIR=os.path.join(CUR_DIR,"../log")
@@ -127,8 +126,8 @@ if __name__ == "__main__":
     LOGFILE2 = os.path.join(LOG_DIR,APPNAME+"2.log")
 
     # Sample logging creation with logging entries
-    logging.addLevelName(SUCCESS, 'SUCCESS')
-    log_options = ColorLoggerOptions(logfile_name=LOGFILE, console_logging_level=SUCCESS)
+    logging.addLevelName(LOGLEVEL_SUCCESS, 'SUCCESS')
+    log_options = ColorLoggerOptions(logfile_name=LOGFILE, console_logging_level=LOGLEVEL_SUCCESS)
     print(log_options.to_json(indent=4))
 
     # Uncomment some other options here below to change behavior
@@ -142,7 +141,7 @@ if __name__ == "__main__":
     logger.warning('And this, too')
     logger.error('And non-ASCII stuff, too, like Øresund and Malmö')
     logger.critical('Try a critical message')
-    logger.log(SUCCESS, 'Then success level that is a custom level')
+    logger.log(LOGLEVEL_SUCCESS, 'Then success level that is a custom level')
 
     print()
     print("[+]Same thing but using function get_logger and debug level")
@@ -152,4 +151,4 @@ if __name__ == "__main__":
     logger2.warning('And this, too')
     logger2.error('And non-ASCII stuff, too, like Øresund and Malmö')
     logger2.critical('Try a critical message')
-    logger2.log(SUCCESS, 'Then success level that is a custom level')
+    logger2.log(LOGLEVEL_SUCCESS, 'Then success level that is a custom level')
