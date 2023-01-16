@@ -7,7 +7,7 @@ class Menu():
         self.menu_display=""
         self.valid_choices=[]
 
-    def menu_choice_dynamic(self, lst_menu_display=[]):
+    def menu_choice_dynamic(self, lst_menu_display:list=[]) -> int:
         """Return correct menu selection from a menu build dynamically based on lst_menu_display 
 
         Args:
@@ -16,9 +16,9 @@ class Menu():
         Returns:
             [int]: index of the element in the list (starting at position 1).Return 0(zero) in case of Cancel Choice.
         """
-        self.console.print_msg("INFO", "\nElements with your criteria:")
+        self.console.print_msg("INFO", "Elements with your criteria:")
         print("0. Cancel")
-        [print(f"{i+1}. {menu_display[0]}") for i, menu_display in enumerate(lst_menu_display)]
+        [print(f"{i+1}. {menu_display}") for i, menu_display in enumerate(lst_menu_display)]
         print()
         bad_choice = True
         # Loop until a good option is selected
@@ -30,7 +30,7 @@ class Menu():
                 bad_choice = False
         return int(menu_choice)
 
-    def menu_choice_fixed(self, menu="", menu_valid_choices=[]):
+    def menu_choice_fixed(self, menu:str="", menu_valid_choices:list=[]) -> str:
         """Print a menu & loop until selection is correct
 
         Args:
@@ -48,7 +48,7 @@ class Menu():
                 bad_choice = False
         return menu_choice
 
-    def menu_choice_YN(self, msg=""):
+    def menu_choice_YN(self, msg:str="") -> str:
         confirm = False
         while not confirm == "Y" and not confirm == "N": 
             confirm = input(f"{msg} (Y/N) ? ").upper()
@@ -57,5 +57,21 @@ class Menu():
         return confirm
 
 if __name__ == "__main__":
-    # TODO: Add sample usage on the __main__ for menu.py
-    pass
+    menu_fixed_valid_choice =["1", "10", "11", "12", "9", "A"]
+    menu_fixed ="""
+1. Test
+    10. Add
+    11. Modify
+    12. Delete
+A. A menu with letter
+9. Exit
+"""
+    print("*** All menu will loop until you select a correct menu option")    
+    menu = Menu()
+    selection = menu.menu_choice_fixed(menu=menu_fixed, menu_valid_choices=menu_fixed_valid_choice)
+    print(f"your selection : {selection}\n\n")
+    selection = menu.menu_choice_dynamic(["Apple", "Peer", "Banana"])
+    print(f"your selection : {selection}\n\n")
+    selection = menu.menu_choice_YN("Are you sure ?")
+    print(f"your selection : {selection}\n\n")
+    
