@@ -1,6 +1,6 @@
 '''
 Author : Philippe Saint-Amand
-Date : 2022-11-30
+Date : 2023-01-16
 
 Description:
     Goal of this script is to have possibility of :
@@ -50,10 +50,10 @@ class ColorFormatter(logging.Formatter):
 
 class ColorLoggerOptions():
     def __init__(self, 
-                console=True, 
+                console:bool=True, 
                 console_formatter = ColorFormatter("%(levelname)s - %(message)s"), 
                 console_logging_level = logging.WARNING,
-                logfile_name = "",
+                logfile_name:Path = "",
                 logfile_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'),
                 logfile_logging_level = logging.DEBUG
                 ):
@@ -78,7 +78,7 @@ class ColorLoggerOptions():
         return json.dumps(result, indent=indent)
 
 class ColorLogger(logging.getLoggerClass()):
-    def __init__(self, name="default", options=ColorLoggerOptions()):
+    def __init__(self, name:str="default", options=ColorLoggerOptions()):
         logging.Logger.__init__(self, name, logging.DEBUG)
         
         # Will log to a logfile
@@ -148,6 +148,7 @@ if __name__ == "__main__":
     print()
     print("[+]Same thing but using function get_logger and debug level")
     logger2 = get_logger(logger_name=APPNAME, logfile=LOGFILE2, file_loglevel=logging.DEBUG)
+#    logger2 = get_logger(logger_name=APPNAME)
     logger2.debug('This message should go to the log file')
     logger2.info('So should this')
     logger2.warning('And this, too')
