@@ -19,17 +19,17 @@ from utils.filename import FileName     #CSVFile, ParameterFile
 
 ### Global Variables
 ### uncomment lines below if you want a dynamic log name instead
+# LOGLEVEL_FILE = logging.DEBUG
 # LOG_FILE = os.path.join(LOG_DIR,__appname__+".log")
-# logfilename_object = FileName(OUT_FILE)
+# logfilename_object = FileName(LOG_FILE)
 # logfilename_object.add_subname("subname")
 # logfilename_object.add_datetime()
 # LOG_FILE = logfilename_object.fullpath
-# LOGLEVEL_FILE = logging.DEBUG
 
 ### uncomment lines below if you want a dynamic name instead
-# OUT_FILE = os.path.join(OUT_DIR,__appname__+".csv")
+OUT_FILE = os.path.join(OUT_DIR,__appname__+".csv")
 # outfilename_object = FileName(OUT_FILE)
-# outfilename_object.add_subname("subname")
+# # outfilename_object.add_subname("subname")
 # outfilename_object.add_datetime()
 # OUT_FILE = outfilename_object.fullpath
 
