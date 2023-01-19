@@ -1,7 +1,14 @@
+# Directories
 __pycache__/
 **/__pycache__/
 .*/
 archive/
+data/
 env/
+log/
 test/
+
+# Files
+.*
+!.gitignore
 test.py
