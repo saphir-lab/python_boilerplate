@@ -23,9 +23,12 @@ from utils.filename import FileName     #CSVFile, ParameterFile
 LOGLEVEL_CONSOLE = LOGLEVEL_SUCCESS
 LOGLEVEL_FILE = LOGLEVEL_DISABLE
 
+DEBUG_CONSOLE:bool=True
+if LOGLEVEL_CONSOLE == LOGLEVEL_DISABLE:
+    DEBUG_CONSOLE:bool=False
+
 all_args={}
 output_format="txt"
-
 
 def callback_outdir(value:Path) -> Path:
     if value and not value.is_dir() and os.path.splitext(value)[1]:
@@ -61,7 +64,7 @@ def main(infile:Path = typer.Argument(..., exists=True, readable=True, resolve_p
         outdir:Path = typer.Option(None, "--outdir", "-d", exists=False, resolve_path=True, show_default="Same directory as infile", help="Location of the output file", callback=callback_outdir),
         outfile:Path = typer.Option(None, "--outfile", "-o", exists=False, resolve_path=True, show_default="Same directory and filename (with new extension) as infile", help="File Name of the output file"),
         banner:bool = typer.Option(BANNER_DISPLAY, help="Display a banner at start of the program", rich_help_panel="Customization and Utils"),
-        debug:bool = typer.Option(False, help="Enable debug mode on the console", rich_help_panel="Customization and Utils"),
+        debug:bool = typer.Option(DEBUG_CONSOLE, help="Enable debug mode on the console", rich_help_panel="Customization and Utils"),
         logfile:Path = typer.Option(LOG_FILE, "--logfile", "-l", exists=False, resolve_path=True,  help="logfile of detailed activities (debug mode)", rich_help_panel="Customization and Utils"),
         version:bool = typer.Option(False, "--version", "-v", callback=callback_version, is_eager=True, help="Display version of the program", rich_help_panel="Customization and Utils")
         ) -> None:
@@ -77,16 +80,11 @@ def main(infile:Path = typer.Argument(..., exists=True, readable=True, resolve_p
     init()
     validate_params()
 
-    all_args_str=""
-    for k,v in all_args.items():
-        all_args_str += f"  - {k}: {v}\n"
-    logger.debug(f"Parameters :\n{all_args_str}")
-
     ### TODO: Add you code here below ###
 
     # End of program
     if all_args["logfile"]:
-        logger.log(LOGLEVEL_SUCCESS, f'logfile available on : {all_args["logfile"]}')
+        logger.log(LOGLEVEL_SUCCESS, f'logfile with full debug information available on : {all_args["logfile"]}')
         
 def validate_params() -> None:
     # Generate default value for missing outfile and/or outdir parameters
@@ -117,6 +115,12 @@ def validate_params() -> None:
             raise typer.Abort()
         else:
             logger.log(LOGLEVEL_SUCCESS, f"Output directory successfully created : '{outdir}'")
+
+    # Print all parameters value in case of debug mode
+    all_args_str=""
+    for k,v in all_args.items():
+        all_args_str += f"  - {k}: {v}\n"
+    logger.debug(f"Parameters :\n{all_args_str}")
 
 if __name__ == "__main__":
     CONSOLE.clear_screen()
