@@ -20,7 +20,8 @@ Cleanup structure based on program needs:
 - remove all sample.txt files in sub-folders
 
 Adapt content of 
-- constants.py (banner_lst, LOGLEVEL_CONSOLE, LOGLEVEL_FILE)
+- banners.py
+- params.py (LOGLEVEL_CONSOLE, LOGLEVEL_FILE, add your own parameters)
 - requirements.txt
 - README.md
 - RELEASE_NOTES.md
