@@ -20,9 +20,8 @@ from utils.filename import FileName     #CSVFile, ParameterFile
 ### Global Variables
 # Possible values for a log level using logging module: CRITICAL:50; ERROR:40; WARNING:30; INFO:20, DEBUG:10
 # Possible values for a log level using CONSTANTS (can be adapted in init.py): LOGLEVEL_SUCCESS:15; LOGLEVEL_DISABLE:99999
-LOGLEVEL_CONSOLE = LOGLEVEL_SUCCESS
-LOGLEVEL_FILE = LOGLEVEL_DISABLE
-
+# LOGLEVEL_CONSOLE = LOGLEVEL_SUCCESS
+# LOGLEVEL_FILE = LOGLEVEL_DISABLE
 DEBUG_CONSOLE:bool=True
 if LOGLEVEL_CONSOLE == LOGLEVEL_DISABLE:
     DEBUG_CONSOLE:bool=False
