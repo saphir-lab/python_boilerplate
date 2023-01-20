@@ -10,5 +10,8 @@ test/
 
 # Files
 .*
-!.gitignore
 test.py
+
+#include some files from previous exclusion
+!.gitignore
+!.vscode/
