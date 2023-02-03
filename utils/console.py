@@ -99,7 +99,6 @@ class Console():
         #     msg = self.MSG_SEVERITY[severity] + msg
         print(msg)
 
-
 if __name__ == "__main__":
     CONSOLE = Console(colored=True)
     CONSOLE.clear_screen()

@@ -7,7 +7,6 @@ from pathlib import Path
 import pandas as pd
 
 ### Import personal modules
-from console import Console
 from coloredlog import ColorLogger, get_logger, LOGLEVEL_SUCCESS, LOGLEVEL_DISABLE
 
 ### Read & write CSV File using Pandas dataframes
@@ -196,9 +195,9 @@ class CSVFile():
             self.logger.log(LOGLEVEL_SUCCESS, f"Successfully save CSV file '{csv_filename}'")
             return True
     
-
 if __name__ == "__main__":
     import os
+    from coloredlog import ColorLogger, get_logger, LOGLEVEL_SUCCESS, LOGLEVEL_DISABLE
     CUR_DIR=os.path.dirname(os.path.abspath(__file__))
     APPNAME, _ = os.path.splitext(os.path.basename(__file__))
     OUT_DIR=os.path.join(CUR_DIR,"../out")
