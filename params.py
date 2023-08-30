@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
+import sys
 from banners import BANNERS
 from utils.console import Console
 from utils.coloredlog import LOGLEVEL_SUCCESS, LOGLEVEL_DISABLE
@@ -13,6 +14,7 @@ CUR_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(CUR_DIR,"data")
 LOG_DIR = os.path.join(CUR_DIR,"log")
 OUT_DIR = os.path.join(CUR_DIR,"out")
+sys.path.append(os.path.join(CUR_DIR,"utils"))  # In order to solve problem of modules in utils loading other modules in utils
 
 ### Following parameters will be ingnore when using cli verion (as will be entered as parameters)
 # Logging
