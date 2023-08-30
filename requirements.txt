@@ -1,4 +1,4 @@
 colorama
-# pandas
-# pyyaml
-# typer[all]   # to enable if you want to use the main_cli (command line with arguemnts)
+# pandas        # used in util.filename.py
+# pyyaml        # used in util.filename.py
+# typer[all]    # to enable if you want to use the main_cli (command line with arguemnts)
